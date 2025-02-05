@@ -1,3 +1,7 @@
+import javax.swing.*;
+import java.awt.*;
+import java.text.AttributedCharacterIterator;
+
 /**
  * A class written to support the TicTacToe Game.
  *
@@ -12,6 +16,7 @@
 
 public class Square {
 
+    private TicTacToeViewer board;
     private String marker;
     private int row;
     private int col;
@@ -23,9 +28,10 @@ public class Square {
      * @param row the row the square is in
      * @param col the column the square is in
      */
-    public Square(int row, int col) {
+    public Square(int row, int col, TicTacToeViewer board) {
         this.row = row;
         this.col = col;
+        this.board = board;
 
         this.marker = TicTacToe.BLANK;
         this.isWinningSquare = false;
@@ -58,4 +64,20 @@ public class Square {
     public String toString() {
         return this.marker;
     }
+
+    public void draw(Graphics g) {
+        if (isWinningSquare) {
+            g.setColor(Color.GREEN);
+            g.fillRect(board.SQUARE_LENGTH * (col + 1), board.SQUARE_LENGTH * (row + 1), board.SQUARE_LENGTH, board.SQUARE_LENGTH);
+        }
+        g.setColor(Color.black);
+        g.drawRect(board.SQUARE_LENGTH * (row + 1), board.SQUARE_LENGTH * (col + 1), board.SQUARE_LENGTH, board.SQUARE_LENGTH);
+        if (marker.equals("O")) {
+            g.drawImage(board.getoImage(), board.SQUARE_LENGTH * (col + 1), board.SQUARE_LENGTH * (row + 1), board.SQUARE_LENGTH, board.SQUARE_LENGTH, board);
+        }
+        else if (marker.equals("X")) {
+            g.drawImage(board.getxImage(), board.SQUARE_LENGTH * (col + 1), board.SQUARE_LENGTH * (row + 1), board.SQUARE_LENGTH, board.SQUARE_LENGTH, board);
+        }
+    }
 }
+
